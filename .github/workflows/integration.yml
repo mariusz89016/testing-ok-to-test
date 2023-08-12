@@ -60,7 +60,7 @@ jobs:
           job: ${{ github.job }}
           # Conveniently, job.status maps to https://developer.github.com/v3/checks/runs/#update-a-check-run
           conclusion: ${{ job.status }}
-          details_url: ${{ steps.jobs.outputs.details_url }}
+          details_url: ${{ steps.jobs.outputs.html_url }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
