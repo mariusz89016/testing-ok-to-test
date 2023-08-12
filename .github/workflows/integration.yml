@@ -86,3 +86,17 @@ jobs:
             });
 
             return result;
+
+      - name: Set preview status
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.repos.createCommitStatus({
+              ...context.repo,
+              sha: context.sha,
+              state: "success",
+              target_url: `...`,
+              description: "Preview is ready!",
+              context: "✨ Preview"
+            });
