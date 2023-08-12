@@ -49,7 +49,7 @@ jobs:
         id: jobs
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          job_name: "integration-fork"
+          job_name: "${{ github.job }}"
 
       # Update check run called "integration-fork"
       - uses: actions/github-script@v6
@@ -76,9 +76,6 @@ jobs:
             });
 
             const check = checks.check_runs.filter(c => c.name === process.env.job);
-            console.log(check);
-            console.log(context);
-            console.log(process);
 
             const { data: result } = await github.rest.checks.update({
               ...context.repo,
