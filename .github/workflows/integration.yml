@@ -44,13 +44,6 @@ jobs:
       - run: |
           echo "Integration tests... success! ;-)"
 
-      - name: Get Current Job Log URL
-        uses: Tiryoh/gha-jobid-action@v0
-        id: jobs
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          job_name: "${{ github.job }}"
-
       # Update check run called "integration-fork"
       - uses: actions/github-script@v6
         id: update-check-run
@@ -60,7 +53,6 @@ jobs:
           job: ${{ github.job }}
           # Conveniently, job.status maps to https://developer.github.com/v3/checks/runs/#update-a-check-run
           conclusion: ${{ job.status }}
-          details_url: ${{ steps.jobs.outputs.html_url }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -81,8 +73,7 @@ jobs:
               ...context.repo,
               check_run_id: check[0].id,
               status: 'completed',
-              conclusion: process.env.conclusion,
-              details_url: process.env.details_url
+              conclusion: process.env.conclusion
             });
 
             return result;
